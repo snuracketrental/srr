@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SNU 라켓 렌탈</title>
+    <meta charset="utf-8">
+    <style>
+      * {
+        /* margin: 0; padding: 0; box-sizing: border-box; */
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
+      .container_1{
+        display: grid;
+        grid-template-rows: 65px 1fr 70px;
+        grid-gap: 15px;
+        height: 100%;
+      }
+      .container_1 .item1 {
+        border: 1.5px lightgray solid;
+      }
+      header {
+        display: flex;
+        align-items: flex-end;
+      }
+      header .hitem:nth-child(1) {
+      flex: 0 0 235px;
+      margin: 0;
+      }
+      header .hitem:nth-child(2) {
+        flex: 1 0 auto;
+        display: flex;
+      }
+      header .hitem:nth-child(2) a {
+        font-weight: bold;
+      }
+        header .hitem:nth-child(2) a:nth-child(-n+2) {
+            flex:0 0 100px;
+        }
+        header .hitem:nth-child(2) a:nth-child(3) {
+            flex: 0 0 180px;
+        }
+      header .hitem:nth-child(3) {
+        flex: 0 0 40px;
+      }
+      header .hitem:nth-child(3) .nav2_image {
+        width: 36px;
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"] {
+        display: none;
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"] + label {
+        display: none;
+        width: 36px;
+        height: 30px;
+        position: relative;
+        z-index: 6;
+        cursor: pointer;
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"] + label span {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        border-radius: 30px;
+        background: #000;
+        transition: all .35s;
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"] + label span:nth-child(1) {
+        top:0;
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"] + label span:nth-child(2) {
+        top: 50%;
+        transform:translateY(-50%);
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"] + label span:nth-child(3) {
+        bottom: 0;
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"]:checked + label span:nth-child(1) {
+        top:50%;
+        transform: translateY(-50%) rotate(45deg);
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"]:checked + label span:nth-child(2) {
+        opacity: 0;
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"]:checked + label span:nth-child(3) {
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
+      }
+      header .hitem:nth-child(3) div[class="sidebar"] {
+        width: 200px;
+        height: 100%;
+        background: white;
+        position:fixed;
+        top: 0;
+        right: -200px;
+        z-index: 5;
+        transition: all .35s;
+      }
+      header .hitem:nth-child(3) div[class="sidebar"] a {
+        display: block;
+        font-weight: bold;
+        text-align: right;
+        margin: 20px;
+        position: relative;
+        top: 70px;
+      }
+
+      header .hitem:nth-child(3) div[class="sidebar"] label[for="tab_original_menu"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        z-index: -1;
+      }
+
+      header .hitem:nth-child(3) label[class="background"] {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,.8);
+        transition: all .35s;
+        opacity: 0; visibility: hidden;
+        z-index: 1;
+      }
+
+      header .hitem:nth-child(3) input[id="tab_original_menu"]:checked + label + div {
+        right: 0;
+      }
+      header .hitem:nth-child(3) input[id="tab_original_menu"]:checked ~ label[class="background"] {
+        opacity: 1;
+        visibility: visible;
+      }
+      section input[id*="slide"] {
+        display: none;
+      }
+      section .slidewrap {
+        max-width: 700px;
+        width: 80%;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      section .slidelist {
+        white-space: nowrap;
+        font-size: 0;
+        padding: 0;
+      }
+      section .slidelist li {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        transition: all .5s;
+      }
+      section .slidelist li a {
+        display: block;
+        position: relative;
+      }
+      section .slidelist li a img {
+        width: 100%;
+      }
+      section .slidelist label {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 25px;
+        cursor: pointer;
+      }
+      section .slidelist .left {
+        left: -5px;
+        background: url("images/화살표2_left.png") center center / 60% no-repeat;
+      }
+      section .slidelist .right {
+        right: -5px;
+        background: url("images/화살표2_right.png") center center / 60% no-repeat;
+      }
+      section [id="slide01"]:checked ~ .slidewrap .slidelist > li {transform:translateX(0%);}
+      section [id="slide02"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-100%);}
+      section [id="slide03"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-200%);}
+      footer {
+        display: grid;
+        grid-template-columns: 40px 1fr 40px 1fr 40px 1fr 40px 1fr;
+        align-items: center;
+      }
+      footer .footer_image {
+        width: 30px;
+      }
+
+      @media (max-width: 800px) {
+        .container_1{
+          grid-template-rows: 65px 1fr 100px;
+        }
+        header .hitem:nth-child(2) {
+          display: none;
+        }
+        header .hitem:nth-child(3) {
+          flex: 0 0 80px;
+          margin-left: auto;
+        }
+        header .hitem:nth-child(3) input[id="tab_original_menu"] + label {
+          display:inline-block;
+        }
+        footer {
+          grid-template-columns: 40px 1fr 40px 1fr;
+          grid-template-rows: 40px 1fr 40px 1fr;
+        }
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+    <div class="container_1">
+    <header class="item1">
+      <h1 class="hitem"><a href="srr2.html">SNU 라켓 렌탈</a></h1>
+      <nav class="hitem">
+        <a href="how_to_apply.html">이용 방법</a>
+        <a href="racketlist.html">라켓 목록</a>
+        <a href="choosing_guide.html">라켓 고르기 가이드</a>
+      </nav>
+      <nav class="hitem menu_additional">
+        <img src="images/my page.png" class="nav2_image">
+        <input type="checkbox" id="tab_original_menu">
+        <label for="tab_original_menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+        <div class="sidebar">
+          <a href="how_to_apply.html">이용 방법</a>
+          <a href="racketlist.html">라켓 목록</a>
+          <a href="choosing_guide.html">라켓 고르기 가이드</a>
+          <label for="tab_original_menu"></label>
+        </div>
+        <label for="tab_original_menu" class="background"></label>
+      </nav>
+    </header>
+
+    <section class="item1">
+      <!-- <img src="20-2 오픈.png" class="sec_image"> -->
+      <input type="radio" name="slide" id="slide01" checked>
+      <input type="radio" name="slide" id="slide02">
+      <input type="radio" name="slide" id="slide03">
+
+      <div class="slidewrap">
+        <ul class="slidelist">
+          <li>
+            <a>
+              <label for="slide03" class="left"></label>
+              <img src="images/20-여름 오픈.jpg">
+              <label for="slide02" class="right"></label>
+            </a>
+          </li>
+          <li>
+            <a>
+              <label for="slide01" class="left"></label>
+              <img src="images/20-2 오픈.jpg">
+              <label for="slide03" class="right"></label>
+            </a>
+          </li>
+          <li>
+            <a>
+              <label for="slide02" class="left"></label>
+              <img src="images/20-겨울 오픈.jpg">
+              <label for="slide01" class="right"></label>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </section>
+
+    <footer class="item1">
+      <img src="images/phone.png" class="footer_image">
+      <div class="footer_content"><strong>Give us a call:</strong><br>+82 (10) 4103 1355</div>
+      <img src="images/e-mail.png" class="footer_image">
+      <div class="footer_content"><strong>Send us a mail:</strong><br>buikk101@gmail.com</div>
+      <img src="images/time.png" class="footer_image">
+      <div class="footer_content"><strong>Monday - Saturday:</strong><br>08.00am - 18.00pm</div>
+      <img src="images/location.png" class="footer_image">
+      <div class="footer_content"><strong>Come visit us:</strong><br>1, Gwanak-ro, Gwanak-gu</div>
+    </footer>
+  </div>
+  </body>
+</html>
